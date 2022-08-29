@@ -1,0 +1,9 @@
+.color-storage-condition,
+.brand-model,
+.store-type,
+.price-imei {
+  display: flex;
+  flex-direction: row;
+}
+.brand-model {
+}
