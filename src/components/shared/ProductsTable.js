@@ -36,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductsTable = ({ state, products }) => {
+const ProductsTable = ({ products, users, uid }) => {
   const [store, setStore] = useState("");
   const [id, setId] = useState("");
   const [showStore, setShowStore] = useState(false);
   const dateFormat = "DD/MM/YYYY";
-  const { users, uid } = state;
+  // const { users, uid } = state;
 
   const [date, setDate] = useState(moment().format(dateFormat));
   const [value, setValue] = useState(new Date());
@@ -267,16 +267,33 @@ ProductsTable.propTypes = {
   products: PropTypes.array,
   isLoading: PropTypes.bool,
 };
-const mapStateToProps = ({ firestore: { ordered } }) => ({
-  products: ordered.products,
-});
 
-const date = moment().format("DD/MM/YYYY");
+const mapStateToProps = (state) => {
+  return {
+    uid: state.firebase.auth.uid,
+    products: state.firestore.ordered.products,
+    users: state.firestore.ordered.users,
+  };
+};
+
+ProductsTable.propTypes = {
+  products: PropTypes.array,
+  users: PropTypes.array,
+  isLoading: PropTypes.bool,
+  // employees: PropTypes.array,
+};
+
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect((props) => [
-    {
-      collection: "products",
-    },
-  ])
+  firestoreConnect((props) => {
+    if (!props.uid) return [];
+    return [
+      {
+        collection: "products",
+      },
+      {
+        collection: "users",
+      },
+    ];
+  })
 )(ProductsTable);
