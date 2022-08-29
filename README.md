@@ -1,10 +1,5 @@
-<<<<<<< HEAD
+
 # Inventory Management App
-
-=======
-# Inventory App 
->>>>>>> 44044860d2222728f0a59e5729605db3467af3b9
-
 
 This is a web application. User can create account, add, read, update or delete inventory item, and keep track of products.
 
